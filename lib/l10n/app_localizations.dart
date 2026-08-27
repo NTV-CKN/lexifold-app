@@ -105,6 +105,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đăng nhập'**
   String get textLogin;
+
+  /// No description provided for @textSignup.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng kí'**
+  String get textSignup;
 }
 
 class _AppLocalizationsDelegate

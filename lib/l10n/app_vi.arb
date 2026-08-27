@@ -1,4 +1,5 @@
 {
     "appName": "LexiFold",
-    "textLogin": "Đăng nhập"
+    "textLogin": "Đăng nhập",
+    "textSignup": "Đăng kí"
 }
