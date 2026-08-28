@@ -1,0 +1,25 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "lexifold-d8b1c",
+          "appId": "1:350678095337:android:e670ed356a1cec81d5a778",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "lexifold-d8b1c",
+          "configurations": {
+            "android": "1:350678095337:android:e670ed356a1cec81d5a778",
+            "ios": "1:350678095337:ios:4c79c65885cb69a8d5a778",
+            "macos": "1:350678095337:ios:4c79c65885cb69a8d5a778",
+            "web": "1:350678095337:web:1cd35b14baefb1c6d5a778",
+            "windows": "1:350678095337:web:356ec67325db73add5a778"
+          }
+        }
+      }
+    }
+  }
+}
