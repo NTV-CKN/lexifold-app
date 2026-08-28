@@ -1,5 +1,18 @@
 {
     "appName": "LexiFold",
+
     "textLogin": "Đăng nhập",
-    "textSignup": "Đăng kí"
+    "textSignup": "Đăng kí",
+    "textExplainSignUp": "Tạo tài khoản và bắt đầu hành trình học tiếng Anh của bạn!",
+    "textEmail": "Email",
+    "hintEmail": "Nhập Email của bạn",
+    "textPassword": "Mật khẩu",
+    "hintEnterPassword": "Mật khẩu chứa từ 6 đến 20 kí tự",
+    "textAcceptPassword": "Xác nhận mật khẩu",
+    "hintEnterRepeatPassword": "Nhập lại mật khẩu",
+    "errorEmailFormat": "Email không đúng định dạng",
+    "errorPasswordNotSame": "Mật khẩu không giống nhau",
+    "errorPasswordFormat": "Mật khẩu phải chứa ít nhất 1 kí tự hoa, số và kí tự đặc biệt",
+    "textRegisterAccount": "Tạo tài khoản",
+    "textAlreadyHaveAnAccount": "Đã có tài khoản?"
 }
