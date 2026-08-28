@@ -111,6 +111,78 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đăng kí'**
   String get textSignup;
+
+  /// No description provided for @textExplainSignUp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo tài khoản và bắt đầu hành trình học tiếng Anh của bạn!'**
+  String get textExplainSignUp;
+
+  /// No description provided for @textEmail.
+  ///
+  /// In vi, this message translates to:
+  /// **'Email'**
+  String get textEmail;
+
+  /// No description provided for @hintEmail.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập Email của bạn'**
+  String get hintEmail;
+
+  /// No description provided for @textPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu'**
+  String get textPassword;
+
+  /// No description provided for @hintEnterPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu chứa từ 6 đến 20 kí tự'**
+  String get hintEnterPassword;
+
+  /// No description provided for @textAcceptPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận mật khẩu'**
+  String get textAcceptPassword;
+
+  /// No description provided for @hintEnterRepeatPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập lại mật khẩu'**
+  String get hintEnterRepeatPassword;
+
+  /// No description provided for @errorEmailFormat.
+  ///
+  /// In vi, this message translates to:
+  /// **'Email không đúng định dạng'**
+  String get errorEmailFormat;
+
+  /// No description provided for @errorPasswordNotSame.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu không giống nhau'**
+  String get errorPasswordNotSame;
+
+  /// No description provided for @errorPasswordFormat.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu phải chứa ít nhất 1 kí tự hoa, số và kí tự đặc biệt'**
+  String get errorPasswordFormat;
+
+  /// No description provided for @textRegisterAccount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo tài khoản'**
+  String get textRegisterAccount;
+
+  /// No description provided for @textAlreadyHaveAnAccount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã có tài khoản?'**
+  String get textAlreadyHaveAnAccount;
 }
 
 class _AppLocalizationsDelegate
