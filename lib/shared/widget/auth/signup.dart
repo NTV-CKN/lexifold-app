@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lexifold/l10n/app_localizations.dart';
+import 'package:lexifold/utils/validator_utils.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp(this._navSignIn, {super.key});
@@ -25,6 +26,11 @@ class _SignUpState extends State<SignUp> {
     return isVisible
         ? Icons.visibility_off_outlined
         : Icons.visibility_outlined;
+  }
+
+  void _handleRegister() {
+    final isValid = _formKey.currentState?.validate();
+    if (isValid != null && isValid) {}
   }
 
   @override
@@ -82,6 +88,8 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 12),
               TextFormField(
                 controller: _emailController,
+                validator: (value) =>
+                    Validators.validateEmail(value, l10n),
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email_outlined),
                   hintText: l10n.hintEmail,
@@ -107,6 +115,8 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 12),
               TextFormField(
                 controller: _passwordController,
+                validator: (value) =>
+                    Validators.validatePassword(value, l10n),
                 obscureText: !_visiblePsswdState,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock_outline),
@@ -145,6 +155,12 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 12),
               TextFormField(
                 controller: _repeatPasswordController,
+                validator: (value) =>
+                    Validators.validateConfirmPassword(
+                      value,
+                      _passwordController.text,
+                      l10n,
+                    ),
                 obscureText: !_visibleRepeatPsswdState,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock_outline),
@@ -185,7 +201,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       backgroundColor: colorScheme.primary,
                     ),
-                    onPressed: () {},
+                    onPressed: _handleRegister,
                     child: Text(
                       l10n.textRegisterAccount,
                       style: TextStyle(
