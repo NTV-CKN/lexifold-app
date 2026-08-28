@@ -18,10 +18,8 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -39,7 +37,29 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Android Studio will place build artifacts here
+# Android Studio build artifacts
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# --- FIREBASE SENSITIVE FILES ---
+# Android
+android/app/google-services.json
+
+# iOS
+ios/Runner/GoogleService-Info.plist
+
+# macOS
+macos/Runner/GoogleService-Info.plist
+
+# Web
+# Nếu bạn copy cấu hình vào index.html thì không ignore được,
+# nhưng nếu dùng flutterfire configure thì nó nằm trong file dưới đây:
+lib/firebase_options.dart
+
+# Firebase CLI logs & config
+firebase-debug.log
+.firebaserc
+
+# Environment variables
+.env*
