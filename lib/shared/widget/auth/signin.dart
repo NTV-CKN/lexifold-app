@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:lexifold/utils/show_progress_dialog.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -12,6 +13,11 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
-    return Text("SignIn");
+    return GestureDetector(
+      onTap: () {
+        ShowProgressDialog.showDialogLoading(context);
+      },
+      child: Text("Tap"),
+    );
   }
 }
