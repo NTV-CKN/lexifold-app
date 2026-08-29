@@ -26,5 +26,9 @@
             "example": "example@xmail.com"
           }
         }
-      }
+      },
+     "textExplainSignIn": "Đăng nhập để bắt đầu hành trình học tiếng Anh của bạn!",
+     "textDontHaveAnAccountYet": "Bạn chưa có tài khoản?",
+     "textSocialAuth": "Đăng nhập với tài khoản mạng xã hội",
+     "textLoginWithGoogle": "Đăng nhập với Google"
 }

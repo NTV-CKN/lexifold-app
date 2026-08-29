@@ -63,6 +63,19 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String textExplainVerifyMail(String email) {
-    return 'Chúng tôi đã gửi tin nhắn xác nhận đến email: `$email` vừa đăng kí của bạn, vui lòng mở ra và xác nhận bước cuối cùng';
+    return 'Chúng tôi đã gửi tin nhắn xác nhận đến email: `$email` vừa đăng kí của bạn, vui lòng mở hộp thư đến hoặc thư rác để xác nhận bước cuối cùng';
   }
+
+  @override
+  String get textExplainSignIn =>
+      'Đăng nhập để bắt đầu hành trình học tiếng Anh của bạn!';
+
+  @override
+  String get textDontHaveAnAccountYet => 'Bạn chưa có tài khoản?';
+
+  @override
+  String get textSocialAuth => 'Đăng nhập với tài khoản mạng xã hội';
+
+  @override
+  String get textLoginWithGoogle => 'Đăng nhập với Google';
 }

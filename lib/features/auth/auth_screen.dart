@@ -64,7 +64,17 @@ class AuthScreen extends StatelessWidget {
               Expanded(
                 child: TabBarView(
                   children: [
-                    SignIn(),
+                    //Navigate SignIn
+                    Builder(
+                      builder: (tabCtx) {
+                        return SignIn(() {
+                          DefaultTabController.of(
+                            tabCtx,
+                          ).animateTo(1);
+                        });
+                      },
+                    ),
+                    //Navigate SignUp
                     Builder(
                       builder: (tabCtx) {
                         return SignUp(

@@ -199,8 +199,32 @@ abstract class AppLocalizations {
   /// Tên email
   ///
   /// In vi, this message translates to:
-  /// **'Chúng tôi đã gửi tin nhắn xác nhận đến email: `{email}` vừa đăng kí của bạn, vui lòng mở ra và xác nhận bước cuối cùng'**
+  /// **'Chúng tôi đã gửi tin nhắn xác nhận đến email: `{email}` vừa đăng kí của bạn, vui lòng mở hộp thư đến hoặc thư rác để xác nhận bước cuối cùng'**
   String textExplainVerifyMail(String email);
+
+  /// No description provided for @textExplainSignIn.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng nhập để bắt đầu hành trình học tiếng Anh của bạn!'**
+  String get textExplainSignIn;
+
+  /// No description provided for @textDontHaveAnAccountYet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn chưa có tài khoản?'**
+  String get textDontHaveAnAccountYet;
+
+  /// No description provided for @textSocialAuth.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng nhập với tài khoản mạng xã hội'**
+  String get textSocialAuth;
+
+  /// No description provided for @textLoginWithGoogle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng nhập với Google'**
+  String get textLoginWithGoogle;
 }
 
 class _AppLocalizationsDelegate
