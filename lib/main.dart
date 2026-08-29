@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/features/auth/auth_screen.dart';
+import 'package:lexifold/features/auth/signup_waiting_verify_screen.dart';
 import 'package:lexifold/utils/theme_utils.dart';
 
 import 'firebase_options.dart';
@@ -14,20 +16,28 @@ void main() async {
   );
 
   runApp(
-    MaterialApp(
-      locale: const Locale("vi"),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
+    ProviderScope(
+      child: MaterialApp(
+        //routes
+        routes: {
+          "/verify-mail-signup": (context) =>
+              const SignupWaitingVerifyScreen(),
+        },
 
-      theme: ThemeUtils.lightTheme,
-      darkTheme: ThemeUtils.darkTheme,
-      themeMode: ThemeMode.system,
-      home: const LexiFoldApp(),
+        locale: const Locale("vi"),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+
+        theme: ThemeUtils.lightTheme,
+        darkTheme: ThemeUtils.darkTheme,
+        themeMode: ThemeMode.system,
+        home: const LexiFoldApp(),
+      ),
     ),
   );
 }

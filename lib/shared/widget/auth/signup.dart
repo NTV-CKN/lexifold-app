@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lexifold/data/model/base_result.dart';
+import 'package:lexifold/data/model/result_wrapper.dart';
 import 'package:lexifold/l10n/app_localizations.dart';
+import 'package:lexifold/providers/auth/auth_provider.dart';
+import 'package:lexifold/utils/show_progress_dialog.dart';
+import 'package:lexifold/utils/show_snackbar.dart';
 import 'package:lexifold/utils/validator_utils.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends ConsumerStatefulWidget {
   const SignUp(this._navSignIn, {super.key});
 
   final void Function() _navSignIn;
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return _SignUpState();
   }
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends ConsumerState<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -30,7 +36,13 @@ class _SignUpState extends State<SignUp> {
 
   void _handleRegister() {
     final isValid = _formKey.currentState?.validate();
-    if (isValid != null && isValid) {}
+    if (isValid != null && isValid) {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+      ref
+          .read(authNotifierProvider.notifier)
+          .signUpAccount(email, password);
+    }
   }
 
   @override
@@ -45,6 +57,37 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context)!;
+
+    //listen signup
+    ref.listen(authNotifierProvider, (prev, next) {
+      //Tắt loading trước đó
+      if (prev != null && prev.isLoading) {
+        ShowProgressDialog.hideDialogLoading(context);
+      }
+
+      //Hiển thị progress loading
+      if (next.isLoading) {
+        ShowProgressDialog.showDialogLoading(context);
+        return;
+      }
+
+      //Đăng kí thành công
+      if (next.hasValue && next.value is Success<BaseResult>) {
+        final successData = next.value as Success<BaseResult>;
+        if (successData.data.success) {
+          Navigator.of(context).pushNamed(
+            "/verify-mail-signup",
+            arguments: {"email": _emailController.text},
+          );
+        }
+      }
+
+      //Đăng kí thất bại
+      if (next.value != null && next.value is Error<BaseResult>) {
+        final error = (next.value as Error).error;
+        ShowSnackbar.showBaseSnackbar(context, error.toString());
+      }
+    });
 
     return SingleChildScrollView(
       child: Form(
