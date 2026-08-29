@@ -183,6 +183,24 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đã có tài khoản?'**
   String get textAlreadyHaveAnAccount;
+
+  /// No description provided for @textRegisterSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng kí tài khoản thành công!'**
+  String get textRegisterSuccess;
+
+  /// No description provided for @textVerifyMail.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác thực Email'**
+  String get textVerifyMail;
+
+  /// Tên email
+  ///
+  /// In vi, this message translates to:
+  /// **'Chúng tôi đã gửi tin nhắn xác nhận đến email: `{email}` vừa đăng kí của bạn, vui lòng mở ra và xác nhận bước cuối cùng'**
+  String textExplainVerifyMail(String email);
 }
 
 class _AppLocalizationsDelegate

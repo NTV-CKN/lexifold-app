@@ -54,4 +54,15 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get textAlreadyHaveAnAccount => 'Đã có tài khoản?';
+
+  @override
+  String get textRegisterSuccess => 'Đăng kí tài khoản thành công!';
+
+  @override
+  String get textVerifyMail => 'Xác thực Email';
+
+  @override
+  String textExplainVerifyMail(String email) {
+    return 'Chúng tôi đã gửi tin nhắn xác nhận đến email: `$email` vừa đăng kí của bạn, vui lòng mở ra và xác nhận bước cuối cùng';
+  }
 }
