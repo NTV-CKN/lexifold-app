@@ -30,5 +30,9 @@
      "textExplainSignIn": "Đăng nhập để bắt đầu hành trình học tiếng Anh của bạn!",
      "textDontHaveAnAccountYet": "Bạn chưa có tài khoản?",
      "textSocialAuth": "Đăng nhập với tài khoản mạng xã hội",
-     "textLoginWithGoogle": "Đăng nhập với Google"
+     "textLoginWithGoogle": "Đăng nhập với Google",
+     "textForgotPassword": "Quên mật khẩu?",
+     "textResetPassword": "Khôi phục mật khẩu",
+     "textExplainResetPassword": "Nhập email để khôi phục mật khẩu",
+     "textSendRequest": "Gửi yêu cầu"
 }

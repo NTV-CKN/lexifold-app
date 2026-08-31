@@ -4,7 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/features/auth/auth_screen.dart';
 import 'package:lexifold/features/auth/signup_waiting_verify_screen.dart';
+import 'package:lexifold/features/auth/reset_password_screen.dart';
 import 'package:lexifold/utils/theme_utils.dart';
+import 'package:lexifold/utils/routes_name.dart';
 
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
@@ -20,8 +22,10 @@ void main() async {
       child: MaterialApp(
         //routes
         routes: {
-          "/verify-mail-signup": (context) =>
+          RoutesName.verifySignUp: (context) =>
               const SignupWaitingVerifyScreen(),
+          RoutesName.resetPassword: (context) =>
+              const ResetPasswordScreen(),
         },
 
         locale: const Locale("vi"),

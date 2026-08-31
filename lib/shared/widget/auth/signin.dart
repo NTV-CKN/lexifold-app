@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/shared/widget/auth/text_divider_center.dart';
+import 'package:lexifold/utils/routes_name.dart';
 
 import '../../../data/model/result/base_result.dart';
 import '../../../data/model/result/result_wrapper.dart';
@@ -42,6 +43,10 @@ class _SignInState extends ConsumerState<SignIn> {
 
   void _handleLoginWithGoogle() {
     ref.read(authNotifierProvider.notifier).signInWithGoogle();
+  }
+
+  void _handleForgotPassword() {
+    Navigator.of(context).pushNamed(RoutesName.resetPassword);
   }
 
   IconData _getIconDataByVisiblePassword(bool isVisible) {
@@ -175,6 +180,24 @@ class _SignInState extends ConsumerState<SignIn> {
                   hintText: l10n.hintEnterPassword,
                   hintStyle: TextStyle(
                     color: Colors.grey.withAlpha(180),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 12),
+
+              //Forgot password
+              Align(
+                alignment: AlignmentGeometry.centerEnd,
+                child: GestureDetector(
+                  onTap: _handleForgotPassword,
+                  child: Text(
+                    l10n.textForgotPassword,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.primary,
+                    ),
                   ),
                 ),
               ),
