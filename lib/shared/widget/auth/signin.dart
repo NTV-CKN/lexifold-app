@@ -40,6 +40,10 @@ class _SignInState extends ConsumerState<SignIn> {
     }
   }
 
+  void _handleLoginWithGoogle() {
+    ref.read(authNotifierProvider.notifier).signInWithGoogle();
+  }
+
   IconData _getIconDataByVisiblePassword(bool isVisible) {
     return isVisible
         ? Icons.visibility_off_outlined
@@ -227,7 +231,7 @@ class _SignInState extends ConsumerState<SignIn> {
                       ),
                       backgroundColor: Colors.blueAccent,
                     ),
-                    onPressed: _handleLoginWithEmailPassword,
+                    onPressed: _handleLoginWithGoogle,
                     child: Row(
                       children: [
                         Icon(

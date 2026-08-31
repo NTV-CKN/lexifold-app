@@ -12,6 +12,8 @@ abstract class AuthRepository {
     String email,
     String password,
   );
+
+  Future<Result<BaseResult>> signInWithGoogle();
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -36,5 +38,10 @@ class AuthRepositoryImpl implements AuthRepository {
       email,
       password,
     );
+  }
+
+  @override
+  Future<Result<BaseResult>> signInWithGoogle() async {
+    return await _authSourceRemote.signInWithGoogle();
   }
 }
