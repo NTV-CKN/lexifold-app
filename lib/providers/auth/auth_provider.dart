@@ -11,13 +11,27 @@ class AuthNotifier extends AsyncNotifier<Result<BaseResult>?> {
     return null;
   }
 
-  Future<void> signUpAccount(String email, password) async {
+  Future<void> signUpAccount(String email, String password) async {
     final authRepository = ref.read(authRepositoryProvider);
     state = AsyncLoading();
 
     //Trả về Async error nếu thất bại
     state = await AsyncValue.guard(() async {
-      return authRepository.signUpAccount(email, password);
+      return await authRepository.signUpAccount(email, password);
+    });
+  }
+
+  Future<void> signInWithEmailPassword(
+    String email,
+    String password,
+  ) async {
+    final authRepository = ref.read(authRepositoryProvider);
+    state = AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      return await authRepository.signInWithEmailPassword(
+        email,
+        password,
+      );
     });
   }
 }

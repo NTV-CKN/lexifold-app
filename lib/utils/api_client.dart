@@ -14,8 +14,8 @@ class ApiClient {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
-        connectTimeout: const Duration(seconds: 13),
-        receiveTimeout: const Duration(seconds: 13),
+        connectTimeout: const Duration(seconds: 50),
+        receiveTimeout: const Duration(seconds: 50),
         headers: {'Content-Type': 'application/json'},
       ),
     );
@@ -92,5 +92,25 @@ class ApiClient {
   Future<void> performLogout() async {
     await _firebaseAuth.signOut();
     await _onLogout?.call();
+  }
+
+  //Giúp các source remote gọi nhanh
+  Future<Response> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return await _dio.get(path, queryParameters: queryParameters);
+  }
+
+  Future<Response> post(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return await _dio.post(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+    );
   }
 }
