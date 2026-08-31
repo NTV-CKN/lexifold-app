@@ -8,14 +8,16 @@ abstract class AuthRepository {
   Future<Result<BaseResult>> signUpAccount(
     String email,
     String password,
+    AppLocalizations l10n,
   );
 
   Future<Result<BaseResult>> signInWithEmailPassword(
     String email,
     String password,
+    AppLocalizations l10n,
   );
 
-  Future<Result<BaseResult>> signInWithGoogle();
+  Future<Result<BaseResult>> signInWithGoogle(AppLocalizations l10n);
 
   Future<Result<BaseResult>> resetPassword(
     String email,
@@ -32,24 +34,33 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<BaseResult>> signUpAccount(
     String email,
     String password,
+    AppLocalizations l10n,
   ) async {
-    return await _authSourceRemote.signUpAccount(email, password);
+    return await _authSourceRemote.signUpAccount(
+      email,
+      password,
+      l10n,
+    );
   }
 
   @override
   Future<Result<BaseResult>> signInWithEmailPassword(
     String email,
     String password,
+    AppLocalizations l10n,
   ) async {
     return await _authSourceRemote.signInWithEmailPassword(
       email,
       password,
+      l10n,
     );
   }
 
   @override
-  Future<Result<BaseResult>> signInWithGoogle() async {
-    return await _authSourceRemote.signInWithGoogle();
+  Future<Result<BaseResult>> signInWithGoogle(
+    AppLocalizations l10n,
+  ) async {
+    return await _authSourceRemote.signInWithGoogle(l10n);
   }
 
   @override

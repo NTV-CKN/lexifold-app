@@ -273,6 +273,54 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đã có lỗi xảy ra trong quá trình thực thi, vui lòng thử lại!'**
   String get textErrorDuringProgress;
+
+  /// No description provided for @textUserDisabled.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tài khoản này đã bị khóa.'**
+  String get textUserDisabled;
+
+  /// No description provided for @textWrongPasswordOrCredential.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu hoặc thông tin xác thực không chính xác.'**
+  String get textWrongPasswordOrCredential;
+
+  /// No description provided for @textWeakPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu quá yếu.'**
+  String get textWeakPassword;
+
+  /// No description provided for @textEmailAlreadyInUse.
+  ///
+  /// In vi, this message translates to:
+  /// **'Email này đã được sử dụng bởi một tài khoản khác.'**
+  String get textEmailAlreadyInUse;
+
+  /// No description provided for @textAccountExistsWithDifferentCredential.
+  ///
+  /// In vi, this message translates to:
+  /// **'Email này đã được liên kết với một phương thức đăng nhập khác.'**
+  String get textAccountExistsWithDifferentCredential;
+
+  /// No description provided for @textOperationNotAllowed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phương thức đăng nhập này chưa được kích hoạt.'**
+  String get textOperationNotAllowed;
+
+  /// No description provided for @textTooManyRequests.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã thử quá nhiều lần. Vui lòng thử lại sau.'**
+  String get textTooManyRequests;
+
+  /// No description provided for @textNetworkRequestFailed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền internet.'**
+  String get textNetworkRequestFailed;
 }
 
 class _AppLocalizationsDelegate
