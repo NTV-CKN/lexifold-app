@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/shared/widget/auth/text_divider_center.dart';
 
+import '../../../data/model/result/base_result.dart';
+import '../../../data/model/result/result_wrapper.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../providers/auth/auth_provider.dart';
+import '../../../utils/show_progress_dialog.dart';
+import '../../../utils/show_snackbar.dart';
 import '../../../utils/validator_utils.dart';
 
 class SignIn extends ConsumerStatefulWidget {
@@ -24,7 +29,16 @@ class _SignInState extends ConsumerState<SignIn> {
       TextEditingController();
   bool _visiblePsswdState = false;
 
-  void _handleLoginWithEmailPassword() {}
+  void _handleLoginWithEmailPassword() {
+    final isValid = _formKey.currentState?.validate();
+    if (isValid != null && isValid) {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+      ref
+          .read(authNotifierProvider.notifier)
+          .signInWithEmailPassword(email, password);
+    }
+  }
 
   IconData _getIconDataByVisiblePassword(bool isVisible) {
     return isVisible
@@ -36,6 +50,37 @@ class _SignInState extends ConsumerState<SignIn> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context)!;
+
+    //listen signup
+    ref.listen(authNotifierProvider, (prev, next) {
+      //Tắt loading trước đó
+      if (prev != null && prev.isLoading) {
+        ShowProgressDialog.hideDialogLoading(context);
+      }
+
+      //Hiển thị progress loading
+      if (next.isLoading) {
+        ShowProgressDialog.showDialogLoading(context);
+        return;
+      }
+
+      //Đăng nhập thành công
+      if (next.hasValue && next.value is Success<BaseResult>) {
+        final successData = next.value as Success<BaseResult>;
+        if (successData.data.success) {
+          ShowSnackbar.showBaseSnackbar(
+            context,
+            successData.data.message,
+          );
+        }
+      }
+
+      //Đăng nhập thất bại
+      if (next.value != null && next.value is Error<BaseResult>) {
+        final error = (next.value as Error).error;
+        ShowSnackbar.showBaseSnackbar(context, error.toString());
+      }
+    });
 
     return SingleChildScrollView(
       child: Form(
