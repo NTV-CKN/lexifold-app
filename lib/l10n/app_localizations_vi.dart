@@ -81,4 +81,13 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get textForgotPassword => 'Quên mật khẩu?';
+
+  @override
+  String get textResetPassword => 'Khôi phục mật khẩu';
+
+  @override
+  String get textExplainResetPassword => 'Nhập email để khôi phục mật khẩu';
+
+  @override
+  String get textSendRequest => 'Gửi yêu cầu';
 }

@@ -7,6 +7,7 @@ import 'package:lexifold/providers/auth/auth_provider.dart';
 import 'package:lexifold/utils/show_progress_dialog.dart';
 import 'package:lexifold/utils/show_snackbar.dart';
 import 'package:lexifold/utils/validator_utils.dart';
+import 'package:lexifold/utils/routes_name.dart';
 
 class SignUp extends ConsumerStatefulWidget {
   const SignUp(this._navSignIn, {super.key});
@@ -76,7 +77,7 @@ class _SignUpState extends ConsumerState<SignUp> {
         final successData = next.value as Success<BaseResult>;
         if (successData.data.success) {
           Navigator.of(context).pushNamed(
-            "/verify-mail-signup",
+            RoutesName.verifySignUp,
             arguments: {"email": _emailController.text},
           );
         }

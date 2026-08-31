@@ -231,6 +231,24 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Quên mật khẩu?'**
   String get textForgotPassword;
+
+  /// No description provided for @textResetPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khôi phục mật khẩu'**
+  String get textResetPassword;
+
+  /// No description provided for @textExplainResetPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập email để khôi phục mật khẩu'**
+  String get textExplainResetPassword;
+
+  /// No description provided for @textSendRequest.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gửi yêu cầu'**
+  String get textSendRequest;
 }
 
 class _AppLocalizationsDelegate
