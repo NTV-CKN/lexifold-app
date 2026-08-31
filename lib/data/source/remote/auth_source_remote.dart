@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lexifold/data/model/result/base_result.dart';
 import 'package:lexifold/env/api_endpoints.dart';
+import 'package:lexifold/l10n/app_localizations.dart';
 import 'package:lexifold/utils/api_client.dart';
 
 import 'package:lexifold/data/model/user.dart' as user_model;
@@ -21,6 +22,7 @@ abstract class AuthSourceRemote {
   Future<Result<BaseResult>> signUpAccount(
     String email,
     String password,
+    AppLocalizations l10n,
   );
 
   ///Hàm này đảm nhận vai trò gọi logic signInWithEmailPassword của Firebase
@@ -29,12 +31,20 @@ abstract class AuthSourceRemote {
   Future<Result<BaseResult>> signInWithEmailPassword(
     String email,
     String password,
+    AppLocalizations l10n,
   );
 
   ///Hàm này đảm nhận vai trò gọi logic đăng nhập Google của Firebase
   ///để lấy ra idToken lưu cache vào thiết bị và gọi hàm [_requestLoginToServer]
   ///để gửi idToken lên server kiểm tra và đăng nhập
-  Future<Result<BaseResult>> signInWithGoogle();
+  Future<Result<BaseResult>> signInWithGoogle(AppLocalizations l10n);
+
+  ///Hàm này sẽ nhận nhiệm vụ gọi logic sendPasswordResetEmail từ của Firebase
+  ///giúp gửi Email đến người dùng để tiến hành khôi phục mật khẩu
+  Future<Result<BaseResult>> resetPassword(
+    String email,
+    AppLocalizations l10n,
+  );
 }
 
 class AuthSourceRemoteImpl implements AuthSourceRemote {
@@ -52,6 +62,7 @@ class AuthSourceRemoteImpl implements AuthSourceRemote {
   Future<Result<BaseResult>> signUpAccount(
     String email,
     String password,
+    AppLocalizations l10n,
   ) async {
     try {
       final userCredential = await _firebaseAuth
@@ -71,19 +82,13 @@ class AuthSourceRemoteImpl implements AuthSourceRemote {
         );
       }
     } on FirebaseAuthException catch (e) {
-      Exception exception;
+      String error = _mapFirebaseAuthError(e.code, l10n);
 
-      if (e.code == 'weak-password') {
-        exception = Exception("Weak password, pls try again");
-      } else if (e.code == 'email-already-in-use') {
-        exception = Exception("Email already in use");
-      } else {
-        exception = Exception(e.message);
-      }
-
-      return Error<BaseResult>(exception);
+      return Error<BaseResult>(Exception(error));
     } catch (e) {
-      return Error<BaseResult>(Exception("Unknown error"));
+      return Error<BaseResult>(
+        Exception(l10n.textErrorDuringProgress),
+      );
     }
   }
 
@@ -112,6 +117,7 @@ class AuthSourceRemoteImpl implements AuthSourceRemote {
   Future<Result<BaseResult>> signInWithEmailPassword(
     String email,
     String password,
+    AppLocalizations l10n,
   ) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
@@ -130,15 +136,21 @@ class AuthSourceRemoteImpl implements AuthSourceRemote {
           message: "Welcome: ${user.displayName}",
         ),
       );
-    } on Exception catch (err) {
-      return Error(
-        Exception("Sign in failed cause: ${err.toString()}"),
+    } on FirebaseAuthException catch (e) {
+      String error = _mapFirebaseAuthError(e.code, l10n);
+
+      return Error<BaseResult>(Exception(error));
+    } catch (e) {
+      return Error<BaseResult>(
+        Exception(l10n.textErrorDuringProgress),
       );
     }
   }
 
   @override
-  Future<Result<BaseResult>> signInWithGoogle() async {
+  Future<Result<BaseResult>> signInWithGoogle(
+    AppLocalizations l10n,
+  ) async {
     try {
       //Mở luồng đăng nhập Google (Chọn tài khoản)
       final GoogleSignInAccount? googleUser = await _googleSignIn
@@ -170,10 +182,70 @@ class AuthSourceRemoteImpl implements AuthSourceRemote {
           message: "Welcome: ${user.displayName ?? user.email}",
         ),
       );
-    } catch (err) {
-      return Error(
-        Exception("Sign in failed cause: ${err.toString()}"),
+    } on FirebaseAuthException catch (e) {
+      String error = _mapFirebaseAuthError(e.code, l10n);
+
+      return Error<BaseResult>(Exception(error));
+    } catch (e) {
+      return Error<BaseResult>(
+        Exception(l10n.textErrorDuringProgress),
       );
+    }
+  }
+
+  @override
+  Future<Result<BaseResult>> resetPassword(
+    String email,
+    AppLocalizations l10n,
+  ) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+
+      return Success(
+        BaseResult(
+          success: true,
+          message: l10n.textSuccessResetPassword,
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      return Error<BaseResult>(
+        Exception(_mapFirebaseAuthError(e.code, l10n)),
+      );
+    } catch (err) {
+      return Error(Exception(l10n.textErrorResetPassword));
+    }
+  }
+
+  String _mapFirebaseAuthError(String code, AppLocalizations l10n) {
+    switch (code) {
+      case 'invalid-email':
+        return l10n.errorEmailFormat;
+      case 'user-not-found':
+        return l10n.textEmailNotExistsInSystem;
+      case 'user-disabled':
+        return l10n.textUserDisabled;
+
+      case 'wrong-password':
+      case 'invalid-credential':
+        return l10n.textWrongPasswordOrCredential;
+      case 'weak-password':
+        return l10n.textWeakPassword;
+
+      case 'email-already-in-use':
+        return l10n.textEmailAlreadyInUse;
+
+      case 'account-exists-with-different-credential':
+        return l10n.textAccountExistsWithDifferentCredential;
+      case 'operation-not-allowed':
+        return l10n.textOperationNotAllowed;
+
+      case 'too-many-requests':
+        return l10n.textTooManyRequests;
+      case 'network-request-failed':
+        return l10n.textNetworkRequestFailed;
+
+      default:
+        return l10n.textErrorDuringProgress;
     }
   }
 }

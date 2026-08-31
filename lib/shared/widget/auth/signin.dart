@@ -30,19 +30,19 @@ class _SignInState extends ConsumerState<SignIn> {
       TextEditingController();
   bool _visiblePsswdState = false;
 
-  void _handleLoginWithEmailPassword() {
+  void _handleLoginWithEmailPassword(AppLocalizations l10n) {
     final isValid = _formKey.currentState?.validate();
     if (isValid != null && isValid) {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
       ref
           .read(authNotifierProvider.notifier)
-          .signInWithEmailPassword(email, password);
+          .signInWithEmailPassword(email, password, l10n);
     }
   }
 
-  void _handleLoginWithGoogle() {
-    ref.read(authNotifierProvider.notifier).signInWithGoogle();
+  void _handleLoginWithGoogle(AppLocalizations l10n) {
+    ref.read(authNotifierProvider.notifier).signInWithGoogle(l10n);
   }
 
   void _handleForgotPassword() {
@@ -219,7 +219,8 @@ class _SignInState extends ConsumerState<SignIn> {
                       ),
                       backgroundColor: colorScheme.primary,
                     ),
-                    onPressed: _handleLoginWithEmailPassword,
+                    onPressed: () =>
+                        _handleLoginWithEmailPassword(l10n),
                     child: Text(
                       l10n.textLogin,
                       style: TextStyle(
@@ -254,7 +255,7 @@ class _SignInState extends ConsumerState<SignIn> {
                       ),
                       backgroundColor: Colors.blueAccent,
                     ),
-                    onPressed: _handleLoginWithGoogle,
+                    onPressed: () => _handleLoginWithGoogle(l10n),
                     child: Row(
                       children: [
                         Icon(

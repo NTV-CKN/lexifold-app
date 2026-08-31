@@ -90,4 +90,50 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get textSendRequest => 'Gửi yêu cầu';
+
+  @override
+  String get textErrorResetPassword =>
+      'Lỗi xảy ra trong quá trình khôi phục mật khẩu, vui lòng thử lại';
+
+  @override
+  String get textSuccessResetPassword =>
+      'Chúng tôi đã gửi mail xác thực đến email này, vui lòng kiểm tra hộp thư và tiến hành khôi phục mật khẩu mới!';
+
+  @override
+  String get textEmailNotExistsInSystem =>
+      'Email này chưa được đăng ký trong hệ thống.';
+
+  @override
+  String get textErrorDuringProgress =>
+      'Đã có lỗi xảy ra trong quá trình thực thi, vui lòng thử lại!';
+
+  @override
+  String get textUserDisabled => 'Tài khoản này đã bị khóa.';
+
+  @override
+  String get textWrongPasswordOrCredential =>
+      'Mật khẩu hoặc thông tin xác thực không chính xác.';
+
+  @override
+  String get textWeakPassword => 'Mật khẩu quá yếu.';
+
+  @override
+  String get textEmailAlreadyInUse =>
+      'Email này đã được sử dụng bởi một tài khoản khác.';
+
+  @override
+  String get textAccountExistsWithDifferentCredential =>
+      'Email này đã được liên kết với một phương thức đăng nhập khác.';
+
+  @override
+  String get textOperationNotAllowed =>
+      'Phương thức đăng nhập này chưa được kích hoạt.';
+
+  @override
+  String get textTooManyRequests =>
+      'Bạn đã thử quá nhiều lần. Vui lòng thử lại sau.';
+
+  @override
+  String get textNetworkRequestFailed =>
+      'Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền internet.';
 }

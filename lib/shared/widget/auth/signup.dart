@@ -35,14 +35,14 @@ class _SignUpState extends ConsumerState<SignUp> {
         : Icons.visibility_outlined;
   }
 
-  void _handleRegister() {
+  void _handleRegister(AppLocalizations l10n) {
     final isValid = _formKey.currentState?.validate();
     if (isValid != null && isValid) {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
       ref
           .read(authNotifierProvider.notifier)
-          .signUpAccount(email, password);
+          .signUpAccount(email, password, l10n);
     }
   }
 
@@ -245,7 +245,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                       ),
                       backgroundColor: colorScheme.primary,
                     ),
-                    onPressed: _handleRegister,
+                    onPressed: () => _handleRegister(l10n),
                     child: Text(
                       l10n.textRegisterAccount,
                       style: TextStyle(
