@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lexifold/data/model/base_result.dart';
-import 'package:lexifold/data/model/result_wrapper.dart';
+import 'package:lexifold/data/model/result/base_result.dart';
+import 'package:lexifold/data/model/result/result_wrapper.dart';
 import 'package:lexifold/data/source/remote/auth_source_remote.dart';
 
 abstract class AuthRepository {

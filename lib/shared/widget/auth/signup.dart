@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lexifold/data/model/base_result.dart';
-import 'package:lexifold/data/model/result_wrapper.dart';
+import 'package:lexifold/data/model/result/base_result.dart';
+import 'package:lexifold/data/model/result/result_wrapper.dart';
 import 'package:lexifold/l10n/app_localizations.dart';
 import 'package:lexifold/providers/auth/auth_provider.dart';
 import 'package:lexifold/utils/show_progress_dialog.dart';

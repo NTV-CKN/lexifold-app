@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lexifold/data/model/base_result.dart';
-import 'package:lexifold/data/model/result_wrapper.dart';
+import 'package:lexifold/data/model/result/base_result.dart';
+import 'package:lexifold/data/model/result/result_wrapper.dart';
 import 'package:lexifold/providers/auth/auth_core_provider.dart';
 
 class AuthNotifier extends AsyncNotifier<Result<BaseResult>?> {

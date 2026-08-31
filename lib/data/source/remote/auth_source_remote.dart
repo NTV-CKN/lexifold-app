@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lexifold/data/model/base_result.dart';
+import 'package:lexifold/data/model/result/base_result.dart';
 
-import '../../model/result_wrapper.dart';
+import '../../model/result/result_wrapper.dart';
 
 abstract class AuthSourceRemote {
   Future<Result<BaseResult>> signUpAccount(
