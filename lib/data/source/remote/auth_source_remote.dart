@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lexifold/data/model/result/base_result.dart';
 import 'package:lexifold/env/api_endpoints.dart';
+import 'package:lexifold/l10n/app_localizations.dart';
 import 'package:lexifold/utils/api_client.dart';
 
 import 'package:lexifold/data/model/user.dart' as user_model;
@@ -35,6 +36,13 @@ abstract class AuthSourceRemote {
   ///để lấy ra idToken lưu cache vào thiết bị và gọi hàm [_requestLoginToServer]
   ///để gửi idToken lên server kiểm tra và đăng nhập
   Future<Result<BaseResult>> signInWithGoogle();
+
+  ///Hàm này sẽ nhận nhiệm vụ gọi logic sendPasswordResetEmail từ của Firebase
+  ///giúp gửi Email đến người dùng để tiến hành khôi phục mật khẩu
+  Future<Result<BaseResult>> resetPassword(
+    String email,
+    AppLocalizations l10n,
+  );
 }
 
 class AuthSourceRemoteImpl implements AuthSourceRemote {
@@ -174,6 +182,40 @@ class AuthSourceRemoteImpl implements AuthSourceRemote {
       return Error(
         Exception("Sign in failed cause: ${err.toString()}"),
       );
+    }
+  }
+
+  @override
+  Future<Result<BaseResult>> resetPassword(
+    String email,
+    AppLocalizations l10n,
+  ) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+
+      return Success(
+        BaseResult(
+          success: true,
+          message: l10n.textSuccessResetPassword,
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      return Error<BaseResult>(
+        Exception(_mapFirebaseAuthError(e.code, l10n)),
+      );
+    } catch (err) {
+      return Error(Exception(l10n.textErrorResetPassword));
+    }
+  }
+
+  String _mapFirebaseAuthError(String code, AppLocalizations l10n) {
+    switch (code) {
+      case 'invalid-email':
+        return l10n.errorEmailFormat;
+      case 'user-not-found':
+        return l10n.textEmailNotExistsInSystem;
+      default:
+        return l10n.textErrorDuringProgress;
     }
   }
 }
