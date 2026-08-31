@@ -225,6 +225,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Đăng nhập với Google'**
   String get textLoginWithGoogle;
+
+  /// No description provided for @textForgotPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quên mật khẩu?'**
+  String get textForgotPassword;
 }
 
 class _AppLocalizationsDelegate

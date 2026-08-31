@@ -44,6 +44,8 @@ class _SignInState extends ConsumerState<SignIn> {
     ref.read(authNotifierProvider.notifier).signInWithGoogle();
   }
 
+  void _handleForgotPassword() {}
+
   IconData _getIconDataByVisiblePassword(bool isVisible) {
     return isVisible
         ? Icons.visibility_off_outlined
@@ -175,6 +177,24 @@ class _SignInState extends ConsumerState<SignIn> {
                   hintText: l10n.hintEnterPassword,
                   hintStyle: TextStyle(
                     color: Colors.grey.withAlpha(180),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 12),
+
+              //Forgot password
+              Align(
+                alignment: AlignmentGeometry.centerEnd,
+                child: GestureDetector(
+                  onTap: _handleForgotPassword,
+                  child: Text(
+                    l10n.textForgotPassword,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.primary,
+                    ),
                   ),
                 ),
               ),
