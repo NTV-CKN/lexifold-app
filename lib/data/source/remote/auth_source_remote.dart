@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lexifold/data/model/result/base_result.dart';
 import 'package:lexifold/env/api_endpoints.dart';
 import 'package:lexifold/utils/api_client.dart';
@@ -29,13 +30,23 @@ abstract class AuthSourceRemote {
     String email,
     String password,
   );
+
+  ///Hàm này đảm nhận vai trò gọi logic đăng nhập Google của Firebase
+  ///để lấy ra idToken lưu cache vào thiết bị và gọi hàm [_requestLoginToServer]
+  ///để gửi idToken lên server kiểm tra và đăng nhập
+  Future<Result<BaseResult>> signInWithGoogle();
 }
 
 class AuthSourceRemoteImpl implements AuthSourceRemote {
   final FirebaseAuth _firebaseAuth;
   final ApiClient _apiClient;
+  final GoogleSignIn _googleSignIn;
 
-  AuthSourceRemoteImpl(this._firebaseAuth, this._apiClient);
+  AuthSourceRemoteImpl(
+    this._firebaseAuth,
+    this._apiClient,
+    this._googleSignIn,
+  );
 
   @override
   Future<Result<BaseResult>> signUpAccount(
@@ -120,6 +131,46 @@ class AuthSourceRemoteImpl implements AuthSourceRemote {
         ),
       );
     } on Exception catch (err) {
+      return Error(
+        Exception("Sign in failed cause: ${err.toString()}"),
+      );
+    }
+  }
+
+  @override
+  Future<Result<BaseResult>> signInWithGoogle() async {
+    try {
+      //Mở luồng đăng nhập Google (Chọn tài khoản)
+      final GoogleSignInAccount? googleUser = await _googleSignIn
+          .signIn();
+
+      if (googleUser == null) {
+        return Error<BaseResult>(
+          Exception("Google Sign In was cancelled by user"),
+        );
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final OAuthCredential credential =
+          GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+
+      await _firebaseAuth.signInWithCredential(credential);
+      final user = await _requestLoginToServer();
+      if (user == null) {
+        throw Exception("User from Server is null");
+      }
+
+      return Success(
+        BaseResult(
+          success: true,
+          message: "Welcome: ${user.displayName ?? user.email}",
+        ),
+      );
+    } catch (err) {
       return Error(
         Exception("Sign in failed cause: ${err.toString()}"),
       );

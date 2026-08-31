@@ -34,6 +34,14 @@ class AuthNotifier extends AsyncNotifier<Result<BaseResult>?> {
       );
     });
   }
+
+  Future<void> signInWithGoogle() async {
+    final authRepository = ref.read(authRepositoryProvider);
+    state = AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      return await authRepository.signInWithGoogle();
+    });
+  }
 }
 
 final authNotifierProvider =

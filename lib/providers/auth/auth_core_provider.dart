@@ -12,6 +12,7 @@ final authSourceRemoteProvider = Provider<AuthSourceRemote>((ref) {
   return AuthSourceRemoteImpl(
     ref.read(firebaseAuthProvider),
     apiClient,
+    ref.read(googleSignIn),
   );
 });
 
