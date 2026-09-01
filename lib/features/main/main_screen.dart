@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lexifold/providers/core/network/network_info_provider.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
@@ -13,6 +14,8 @@ class MainScreen extends ConsumerStatefulWidget {
 class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return Text("MainScreen");
+    final isConnected = ref.watch(isConnectedProvider);
+
+    return Text(isConnected ? "MainScreen" : "No connected");
   }
 }
