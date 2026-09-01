@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/features/auth/auth_screen.dart';
 import 'package:lexifold/features/auth/signup_waiting_verify_screen.dart';
 import 'package:lexifold/features/auth/reset_password_screen.dart';
+import 'package:lexifold/features/common/splash_screen.dart';
+import 'package:lexifold/features/main/main_screen.dart';
 import 'package:lexifold/utils/theme_utils.dart';
 import 'package:lexifold/utils/routes_name.dart';
 
@@ -26,6 +28,8 @@ void main() async {
               const SignupWaitingVerifyScreen(),
           RoutesName.resetPassword: (context) =>
               const ResetPasswordScreen(),
+          RoutesName.authScreen: (context) => const AuthScreen(),
+          RoutesName.mainScreen: (context) => const MainScreen(),
         },
 
         locale: const Locale("vi"),
@@ -51,6 +55,6 @@ class LexiFoldApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AuthScreen();
+    return const SplashScreen();
   }
 }
