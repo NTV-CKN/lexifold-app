@@ -46,6 +46,8 @@
       "textAccountExistsWithDifferentCredential": "Email này đã được liên kết với một phương thức đăng nhập khác.",
       "textOperationNotAllowed": "Phương thức đăng nhập này chưa được kích hoạt.",
       "textTooManyRequests": "Bạn đã thử quá nhiều lần. Vui lòng thử lại sau.",
-      "textNetworkRequestFailed": "Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền internet."
+      "textNetworkRequestFailed": "Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền internet.",
 
+      "textHome": "Trang chủ",
+      "textLibrary": "Thư viện"
 }
