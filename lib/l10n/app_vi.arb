@@ -49,5 +49,9 @@
       "textNetworkRequestFailed": "Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền internet.",
 
       "textHome": "Trang chủ",
-      "textLibrary": "Thư viện"
+      "textLibrary": "Thư viện",
+      "textFolder": "Thư mục",
+      "textSet": "Học phần",
+      "textVocabScan": "Từ vựng đã quét",
+      "textFavorite": "Yêu thích"
 }

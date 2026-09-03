@@ -142,4 +142,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get textLibrary => 'Thư viện';
+
+  @override
+  String get textFolder => 'Thư mục';
+
+  @override
+  String get textSet => 'Học phần';
+
+  @override
+  String get textVocabScan => 'Từ vựng đã quét';
+
+  @override
+  String get textFavorite => 'Yêu thích';
 }

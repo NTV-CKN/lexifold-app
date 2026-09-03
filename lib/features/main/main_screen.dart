@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/features/main/home/home_screen.dart';
@@ -39,7 +38,6 @@ class MainScreen extends ConsumerWidget {
 
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final width25per = MediaQuery.of(context).size.width * 0.25;
 
     final screens = const [HomeScreen(), LibraryScreen()];
 
