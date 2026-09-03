@@ -77,10 +77,9 @@ class _SignInState extends ConsumerState<SignIn> {
       if (next.hasValue && next.value is Success<BaseResult>) {
         final successData = next.value as Success<BaseResult>;
         if (successData.data.success) {
-          ShowSnackbar.showBaseSnackbar(
+          Navigator.of(
             context,
-            successData.data.message,
-          );
+          ).pushReplacementNamed(RoutesName.mainScreen);
         }
       }
 
