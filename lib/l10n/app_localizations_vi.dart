@@ -136,4 +136,22 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get textNetworkRequestFailed =>
       'Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền internet.';
+
+  @override
+  String get textHome => 'Trang chủ';
+
+  @override
+  String get textLibrary => 'Thư viện';
+
+  @override
+  String get textFolder => 'Thư mục';
+
+  @override
+  String get textSet => 'Học phần';
+
+  @override
+  String get textVocabScan => 'Từ vựng đã quét';
+
+  @override
+  String get textFavorite => 'Yêu thích';
 }

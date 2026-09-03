@@ -1,21 +1,97 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lexifold/providers/core/network/network_info_provider.dart';
+import 'package:lexifold/features/main/home/home_screen.dart';
+import 'package:lexifold/features/main/library/library_screen.dart';
+import 'package:lexifold/features/main/main_screen_provider.dart';
+import 'package:lexifold/l10n/app_localizations.dart';
 
-class MainScreen extends ConsumerStatefulWidget {
+class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
 
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
-    return _MainScreenState();
+  Widget _buildNavItem(
+    BuildContext context,
+    WidgetRef ref, {
+    required IconData icon,
+    required String label,
+    required int index,
+    required int currentIndex,
+  }) {
+    final isSelected = index == currentIndex;
+    final color = isSelected
+        ? const Color(0xFF635BFF)
+        : Colors.grey.shade500;
+
+    return InkWell(
+      onTap: () =>
+          ref.read(tabMainBottomNavProvider.notifier).state = index,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Icon(icon, color: color, size: 40)],
+      ),
+    );
   }
-}
 
-class _MainScreenState extends ConsumerState<MainScreen> {
   @override
-  Widget build(BuildContext context) {
-    final isConnected = ref.watch(isConnectedProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentIndex = ref.watch(tabMainBottomNavProvider);
 
-    return Text(isConnected ? "MainScreen" : "No connected");
+    final l10n = AppLocalizations.of(context)!;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final screens = const [HomeScreen(), LibraryScreen()];
+
+    return Scaffold(
+      //content
+      body: IndexedStack(children: screens, index: currentIndex),
+
+      //FAB scan
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        shape: const CircleBorder(),
+        backgroundColor: colorScheme.primary,
+        elevation: 3,
+        child: Icon(
+          Icons.document_scanner_outlined,
+          color: Colors.white,
+          size: 28,
+        ),
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.centerDocked,
+
+      //Bottom nav
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          children: [
+            //home
+            const Spacer(flex: 1),
+            _buildNavItem(
+              context,
+              ref,
+              icon: Icons.home_outlined,
+              label: l10n.textHome,
+              index: 0,
+              currentIndex: currentIndex,
+            ),
+
+            //scan
+            const Spacer(flex: 3),
+
+            //library
+            _buildNavItem(
+              context,
+              ref,
+              icon: Icons.folder_copy_outlined,
+              label: l10n.textLibrary,
+              index: 1,
+              currentIndex: currentIndex,
+            ),
+            const Spacer(flex: 1),
+          ],
+        ),
+      ),
+    );
   }
 }

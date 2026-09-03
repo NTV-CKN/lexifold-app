@@ -321,6 +321,42 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền internet.'**
   String get textNetworkRequestFailed;
+
+  /// No description provided for @textHome.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trang chủ'**
+  String get textHome;
+
+  /// No description provided for @textLibrary.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thư viện'**
+  String get textLibrary;
+
+  /// No description provided for @textFolder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thư mục'**
+  String get textFolder;
+
+  /// No description provided for @textSet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Học phần'**
+  String get textSet;
+
+  /// No description provided for @textVocabScan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Từ vựng đã quét'**
+  String get textVocabScan;
+
+  /// No description provided for @textFavorite.
+  ///
+  /// In vi, this message translates to:
+  /// **'Yêu thích'**
+  String get textFavorite;
 }
 
 class _AppLocalizationsDelegate
