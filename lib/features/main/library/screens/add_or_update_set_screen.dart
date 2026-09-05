@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/features/main/library/screens/add_or_update_set_provider.dart';
+import 'package:lexifold/features/main/library/widgets/vocab/vocabulary_item.dart';
 import 'package:lexifold/utils/show_progress_dialog.dart';
 
 import '../../../../l10n/app_localizations.dart';
@@ -104,7 +105,19 @@ class _AddOrUpdateSetState
             ],
           ),
 
-          body: ,
+          body: ListView.builder(
+            itemCount: formData.cards.length,
+            addAutomaticKeepAlives: true,
+            controller: _scrollController,
+            itemBuilder: (ctx, index) {
+              final card = formData.cards[index];
+              return VocabularyItemTile(
+                key: ValueKey(card.vocabulary.id),
+                index: index,
+                item: card,
+              );
+            },
+          ),
         );
       },
       error: (err, stack) =>
