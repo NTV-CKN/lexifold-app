@@ -1,12 +1,93 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lexifold/features/main/library/widgets/set/set_content.dart';
 import 'package:lexifold/l10n/app_localizations.dart';
 
 class LibraryScreen extends ConsumerWidget {
   const LibraryScreen({super.key});
+
+  void _showCreateBottomSheet(
+    BuildContext context,
+    ColorScheme colorScheme,
+    AppLocalizations l10n,
+  ) {
+    showModalBottomSheet(
+      showDragHandle: true,
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            //CREATE SET
+            Container(
+              padding: EdgeInsets.all(12),
+              margin: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Color(0xFF8B5CF6),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: () {},
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.menu_book_outlined,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      l10n.textSet,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            //CREATE FOLDER
+            Container(
+              padding: EdgeInsets.all(12),
+              margin: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Color(0xFF8B5CF6),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: () {},
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.folder_copy_outlined,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      l10n.textFolder,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +108,14 @@ class LibraryScreen extends ConsumerWidget {
               child: SizedBox(
                 height: 26,
                 width: 26,
-                child: Icon(Icons.add),
+                child: IconButton(
+                  onPressed: () => _showCreateBottomSheet(
+                    context,
+                    colorScheme,
+                    l10n,
+                  ),
+                  icon: Icon(Icons.add),
+                ),
               ),
             ),
           ],
@@ -54,7 +142,7 @@ class LibraryScreen extends ConsumerWidget {
         ),
         body: TabBarView(
           children: [
-            Center(child: Text(l10n.textSet)),
+            const SetContent(),
             Center(child: Text(l10n.textFolder)),
             Center(child: Text(l10n.textVocabScan)),
             Center(child: Text(l10n.textFavorite)),
