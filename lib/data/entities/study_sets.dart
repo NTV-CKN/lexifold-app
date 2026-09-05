@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:lexifold/data/enums/sync_option.dart';
 
 class StudySets extends Table {
-  TextColumn get id => text().unique()();
+  TextColumn get id => text()();
 
   TextColumn get title => text().withLength(min: 3, max: 60)();
 
