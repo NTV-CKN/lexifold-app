@@ -27,6 +27,8 @@ class Vocabularies extends Table {
   DateTimeColumn get updatedAt =>
       dateTime().withDefault(currentDateAndTime)();
 
+  Vocabularies();
+
   @override
   Set<Column> get primaryKey => {id};
 }

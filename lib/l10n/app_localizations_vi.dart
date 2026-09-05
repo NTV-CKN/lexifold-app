@@ -154,4 +154,13 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get textFavorite => 'Yêu thích';
+
+  @override
+  String get textNotSetNameYet => 'Học phần chưa được đặt tên';
+
+  @override
+  String get textPrivate => 'Riêng tư';
+
+  @override
+  String get textPublic => 'Công khai';
 }
