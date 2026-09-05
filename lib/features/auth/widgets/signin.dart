@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lexifold/shared/widget/auth/text_divider_center.dart';
+import 'package:lexifold/shared/widget/text_divider_center.dart';
 import 'package:lexifold/utils/routes_name.dart';
 
 import '../../../data/model/result/base_result.dart';

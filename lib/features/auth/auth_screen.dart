@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lexifold/l10n/app_localizations.dart';
-import 'package:lexifold/shared/widget/auth/signin.dart';
-import 'package:lexifold/shared/widget/auth/signup.dart';
+import 'package:lexifold/features/auth/widgets/signin.dart';
+import 'package:lexifold/features/auth/widgets/signup.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});

@@ -46,15 +46,18 @@ class MainScreen extends ConsumerWidget {
       body: IndexedStack(children: screens, index: currentIndex),
 
       //FAB scan
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        shape: const CircleBorder(),
-        backgroundColor: colorScheme.primary,
-        elevation: 3,
-        child: Icon(
-          Icons.document_scanner_outlined,
-          color: Colors.white,
-          size: 28,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(top: 27),
+        child: FloatingActionButton(
+          onPressed: () {},
+          shape: const CircleBorder(),
+          backgroundColor: colorScheme.primary,
+          elevation: 3,
+          child: Icon(
+            Icons.document_scanner_outlined,
+            color: Colors.white,
+            size: 30,
+          ),
         ),
       ),
       floatingActionButtonLocation:
@@ -62,6 +65,8 @@ class MainScreen extends ConsumerWidget {
 
       //Bottom nav
       bottomNavigationBar: BottomAppBar(
+        notchMargin: 20.0,
+        clipBehavior: Clip.antiAlias,
         shape: const CircularNotchedRectangle(),
         child: Row(
           children: [
