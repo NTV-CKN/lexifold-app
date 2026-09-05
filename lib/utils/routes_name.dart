@@ -3,4 +3,6 @@ class RoutesName {
   static const String resetPassword = "/reset-password";
   static const String authScreen = "/auth-screen";
   static const String mainScreen = "/main-screen";
+  static const String addOrUpdateSetScreen =
+      "/add-or-update-set-screen";
 }

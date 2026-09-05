@@ -53,5 +53,9 @@
       "textFolder": "Thư mục",
       "textSet": "Học phần",
       "textVocabScan": "Từ vựng đã quét",
-      "textFavorite": "Yêu thích"
+      "textFavorite": "Yêu thích",
+
+      "textNotSetNameYet": "Học phần chưa được đặt tên",
+      "textPrivate": "Riêng tư",
+      "textPublic": "Công khai"
 }

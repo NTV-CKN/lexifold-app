@@ -357,6 +357,24 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Yêu thích'**
   String get textFavorite;
+
+  /// No description provided for @textNotSetNameYet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Học phần chưa được đặt tên'**
+  String get textNotSetNameYet;
+
+  /// No description provided for @textPrivate.
+  ///
+  /// In vi, this message translates to:
+  /// **'Riêng tư'**
+  String get textPrivate;
+
+  /// No description provided for @textPublic.
+  ///
+  /// In vi, this message translates to:
+  /// **'Công khai'**
+  String get textPublic;
 }
 
 class _AppLocalizationsDelegate
