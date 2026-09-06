@@ -22,9 +22,35 @@ class _AddOrUpdateSetState
     extends ConsumerState<AddOrUpdateSetScreen> {
   late ScrollController _scrollController;
   late GlobalKey<FormState> _vocabulariesKey;
+  final _idSet = uuid.v4();
 
   IconData getIconByVisibility(bool isPublic) {
     return isPublic ? Icons.public : Icons.public_off;
+  }
+
+  void _addCard((String, bool) args) {
+    final vocab = ref
+        .read(studySetFormStateProvider(args).notifier)
+        .addCard();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final formState = ref
+          .read(studySetFormStateProvider(args))
+          .valueOrNull;
+      if (formState != null && formState.cards.isNotEmpty) {
+        final lastCard = formState.cards.last;
+
+        lastCard.termFocus?.requestFocus();
+
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      }
+    });
   }
 
   @override
@@ -43,10 +69,14 @@ class _AddOrUpdateSetState
         ModalRoute.of(context)?.settings.arguments
             as Map<String, dynamic>;
     final bool isUpdate = args[AddOrUpdateSetScreen.KEY_IS_UPDATE];
-    final String? idSet = args[AddOrUpdateSetScreen.KEY_ID_SET];
-
+    final String idSetArg = args[AddOrUpdateSetScreen.KEY_ID_SET];
+    final String idSet = idSetArg == null || idSetArg.isEmpty
+        ? _idSet
+        : idSetArg;
     //watch
-    final studySetForm = ref.watch(studySetFormStateProvider(idSet));
+    final studySetForm = ref.watch(
+      studySetFormStateProvider((idSet, isUpdate)),
+    );
 
     return studySetForm.when(
       data: (formData) {
@@ -107,6 +137,29 @@ class _AddOrUpdateSetState
             ],
           ),
 
+          floatingActionButton: FloatingActionButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            onPressed: () {
+              _addCard((formData.studySetData.id, isUpdate));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: colorScheme.primaryContainer,
+              ),
+              child: Text(
+                l10n.textAddCard,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  overflow: TextOverflow.visible,
+                  color: colorScheme.onPrimaryContainer,
+                ),
+              ),
+            ),
+          ),
+
           body: Form(
             key: _vocabulariesKey,
             child: ListView.builder(
@@ -118,6 +171,8 @@ class _AddOrUpdateSetState
                 return VocabularyItemTile(
                   key: ValueKey(card.vocabulary.id),
                   index: index,
+                  isUpdate: isUpdate,
+                  setId: formData.studySetData.id,
                   item: card,
                   formKey: _vocabulariesKey,
                 );

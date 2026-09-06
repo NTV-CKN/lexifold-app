@@ -181,4 +181,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get textDataCannotEmpty => 'Dữ liệu không được để trống';
+
+  @override
+  String get textAddCard => 'Thêm thẻ';
 }

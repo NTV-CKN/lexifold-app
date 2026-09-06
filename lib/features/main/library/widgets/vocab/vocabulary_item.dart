@@ -8,15 +8,17 @@ import 'package:lexifold/utils/validator_utils.dart';
 class VocabularyItemTile extends ConsumerStatefulWidget {
   final int index;
   final VocabItem item;
-  final String? setId;
+  final String setId;
   final GlobalKey<FormState> formKey;
+  final bool isUpdate;
 
   const VocabularyItemTile({
     super.key,
     required this.index,
     required this.item,
     required this.formKey,
-    this.setId,
+    required this.isUpdate,
+    required this.setId,
   });
 
   @override
@@ -69,7 +71,10 @@ class _VocabularyItemTileState
     final l10n = AppLocalizations.of(context)!;
 
     final notifier = ref.read(
-      studySetFormStateProvider(widget.setId).notifier,
+      studySetFormStateProvider((
+        widget.setId,
+        widget.isUpdate,
+      )).notifier,
     );
 
     return Card(

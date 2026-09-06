@@ -411,6 +411,12 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Dữ liệu không được để trống'**
   String get textDataCannotEmpty;
+
+  /// No description provided for @textAddCard.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm thẻ'**
+  String get textAddCard;
 }
 
 class _AppLocalizationsDelegate
