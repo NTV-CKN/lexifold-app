@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/data/model/set/vocab_item.dart';
 import 'package:lexifold/features/main/library/screens/add_or_update_set_provider.dart';
+import 'package:lexifold/l10n/app_localizations.dart';
+import 'package:lexifold/utils/validator_utils.dart';
 
 class VocabularyItemTile extends ConsumerStatefulWidget {
   final int index;
   final VocabItem item;
-  final String? setId;
+  final String setId;
+  final GlobalKey<FormState> formKey;
+  final bool isUpdate;
 
   const VocabularyItemTile({
     super.key,
     required this.index,
     required this.item,
-    this.setId,
+    required this.formKey,
+    required this.isUpdate,
+    required this.setId,
   });
 
   @override
@@ -37,6 +43,21 @@ class _VocabularyItemTileState
   }
 
   @override
+  void didUpdateWidget(covariant VocabularyItemTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.item.vocabulary.term !=
+            widget.item.vocabulary.term &&
+        _termController.text != widget.item.vocabulary.term) {
+      _termController.text = widget.item.vocabulary.term;
+    }
+    if (oldWidget.item.vocabulary.definition !=
+            widget.item.vocabulary.definition &&
+        _defController.text != widget.item.vocabulary.definition) {
+      _defController.text = widget.item.vocabulary.definition;
+    }
+  }
+
+  @override
   void dispose() {
     _termController.dispose();
     _defController.dispose();
@@ -47,8 +68,13 @@ class _VocabularyItemTileState
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+
     final notifier = ref.read(
-      studySetFormStateProvider(widget.setId).notifier,
+      studySetFormStateProvider((
+        widget.setId,
+        widget.isUpdate,
+      )).notifier,
     );
 
     return Card(
@@ -67,7 +93,7 @@ class _VocabularyItemTileState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${widget.index}',
+                  '${widget.index + 1}',
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.onSurfaceVariant,
@@ -79,21 +105,23 @@ class _VocabularyItemTileState
                     color: colorScheme.onSurfaceVariant,
                   ),
                   onSelected: (value) {
-                    if (value == 'delete') {}
+                    if (value == 'delete') {
+                      //notifier.removeCard(widget.item.vocabulary.id);
+                    }
                   },
                   itemBuilder: (context) => [
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: 'delete',
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.delete_outline,
                             color: Colors.red,
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Text(
-                            'Xóa thẻ',
-                            style: TextStyle(color: Colors.red),
+                            l10n.textDeleteCard,
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ],
                       ),
@@ -103,23 +131,27 @@ class _VocabularyItemTileState
               ],
             ),
             const SizedBox(height: 12),
-
             Text(
-              'Thuật ngữ',
+              l10n.textTerm,
               style: theme.textTheme.labelMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 6),
-            TextField(
+            TextFormField(
               controller: _termController,
               focusNode: widget.item.termFocus,
-              onChanged: (val) {},
+              onChanged: (val) {
+                //notifier.updateTerm(widget.item.vocabulary.id, val);
+              },
+              style: TextStyle(color: colorScheme.primary),
+              validator: (value) =>
+                  Validators.checkInputNotEmpty(value, l10n),
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                hintText: 'Nhập thuật ngữ',
+                hintText: l10n.hintEnterTerm,
                 filled: true,
-                fillColor: colorScheme.surfaceContainerHighest,
+                fillColor: colorScheme.onPrimary,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
@@ -131,24 +163,30 @@ class _VocabularyItemTileState
               ),
             ),
             const SizedBox(height: 16),
-
-            // Ô 2: Định nghĩa
             Text(
-              'Định nghĩa',
+              l10n.textDefine,
               style: theme.textTheme.labelMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 6),
-            TextField(
+            TextFormField(
               controller: _defController,
               focusNode: widget.item.defineFocus,
-              onChanged: (val) {},
+              style: TextStyle(color: colorScheme.primary),
+              onChanged: (val) {
+                // notifier.updateDefinition(
+                //   widget.item.vocabulary.id,
+                //   val,
+                // );
+              },
+              validator: (value) =>
+                  Validators.checkInputNotEmpty(value, l10n),
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
-                hintText: 'Nhập định nghĩa',
+                hintText: l10n.hintEnterDefine,
                 filled: true,
-                fillColor: colorScheme.surfaceContainerHighest,
+                fillColor: colorScheme.onPrimary,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,

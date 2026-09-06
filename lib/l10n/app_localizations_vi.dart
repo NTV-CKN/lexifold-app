@@ -163,4 +163,25 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get textPublic => 'Công khai';
+
+  @override
+  String get textTerm => 'Thuật ngữ';
+
+  @override
+  String get hintEnterTerm => 'Nhập thuật ngữ';
+
+  @override
+  String get textDefine => 'Định nghĩa';
+
+  @override
+  String get hintEnterDefine => 'Nhập định nghĩa';
+
+  @override
+  String get textDeleteCard => 'Xóa thẻ';
+
+  @override
+  String get textDataCannotEmpty => 'Dữ liệu không được để trống';
+
+  @override
+  String get textAddCard => 'Thêm thẻ';
 }

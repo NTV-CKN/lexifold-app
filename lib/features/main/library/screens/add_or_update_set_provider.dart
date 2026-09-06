@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/data/enums/sync_option.dart';
 import 'package:lexifold/data/model/set/study_set_data.dart';
@@ -18,13 +19,44 @@ class StudySetFormState {
     required this.studySetData,
     required this.cards,
   });
+
+  StudySetFormState copyWith({
+    StudySetData? studySetData,
+    List<VocabItem>? cards,
+  }) {
+    return StudySetFormState(
+      studySetData: studySetData ?? this.studySetData,
+      cards: cards ?? this.cards,
+    );
+  }
 }
 
 class StudySetFormStateNotifier
     extends
-        AutoDisposeFamilyAsyncNotifier<StudySetFormState, String?> {
+        AutoDisposeFamilyAsyncNotifier<
+          StudySetFormState,
+          (String idSet, bool isUpdate)
+        > {
+  VocabItem? addCard() {
+    final formState = state.valueOrNull;
+    if (formState != null) {
+      final vocabItem = _createVocabItem(formState.studySetData.id);
+      final updatedCards = [...formState.cards, vocabItem];
+      state = AsyncData(
+        formState.copyWith(
+          cards: updatedCards,
+          studySetData: formState.studySetData.copyWith(),
+        ),
+      );
+
+      return vocabItem;
+    }
+
+    return null;
+  }
+
   @override
-  FutureOr<StudySetFormState> build(String? arg) {
+  FutureOr<StudySetFormState> build((String, bool) args) {
     ref.onDispose(() {
       final studyFormState = state.valueOrNull;
       if (studyFormState != null) {
@@ -34,28 +66,11 @@ class StudySetFormStateNotifier
       }
     });
     // if (arg == null) {
-    final studySetId = uuid.v4();
+    final studySetId = args.$1 as String;
 
     final cards = [
-      VocabItem(
-        VocabularyData(
-          id: uuid.v4(),
-          definition: "",
-          term: "",
-          studySetId: studySetId,
-          updatedAt: DateTime.now(),
-        ),
-      ),
-
-      VocabItem(
-        VocabularyData(
-          id: uuid.v4(),
-          definition: "",
-          term: "",
-          studySetId: studySetId,
-          updatedAt: DateTime.now(),
-        ),
-      ),
+      _createVocabItem(studySetId),
+      _createVocabItem(studySetId),
     ];
     final studySetData = StudySetData(
       id: studySetId,
@@ -74,8 +89,25 @@ class StudySetFormStateNotifier
 }
 
 final studySetFormStateProvider = AsyncNotifierProvider.autoDispose
-    .family<StudySetFormStateNotifier, StudySetFormState, String?>(
-      StudySetFormStateNotifier.new,
-    );
+    .family<
+      StudySetFormStateNotifier,
+      StudySetFormState,
+      (String, bool)
+    >(StudySetFormStateNotifier.new);
 
 ///End-FormState
+
+///Các hàm phụ trợ
+VocabItem _createVocabItem(String idSet) {
+  return VocabItem(
+    VocabularyData(
+      id: uuid.v4(),
+      studySetId: idSet,
+      term: "",
+      definition: "",
+      updatedAt: DateTime.now(),
+    ),
+    defineFocus: FocusNode(),
+    termFocus: FocusNode(),
+  );
+}

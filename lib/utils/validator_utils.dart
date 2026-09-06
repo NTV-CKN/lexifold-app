@@ -52,4 +52,15 @@ class Validators {
 
     return null;
   }
+
+  static String? checkInputNotEmpty(
+    String? value,
+    AppLocalizations l10n,
+  ) {
+    if (value == null || value.isEmpty) {
+      return l10n.textDataCannotEmpty;
+    }
+
+    return null;
+  }
 }

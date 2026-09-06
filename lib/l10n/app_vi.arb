@@ -57,5 +57,12 @@
 
       "textNotSetNameYet": "Học phần chưa được đặt tên",
       "textPrivate": "Riêng tư",
-      "textPublic": "Công khai"
+      "textPublic": "Công khai",
+      "textTerm": "Thuật ngữ",
+      "hintEnterTerm": "Nhập thuật ngữ",
+      "textDefine": "Định nghĩa",
+      "hintEnterDefine": "Nhập định nghĩa",
+      "textDeleteCard": "Xóa thẻ",
+      "textDataCannotEmpty": "Dữ liệu không được để trống",
+      "textAddCard": "Thêm thẻ"
 }
