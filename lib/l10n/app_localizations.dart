@@ -375,6 +375,42 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Công khai'**
   String get textPublic;
+
+  /// No description provided for @textTerm.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thuật ngữ'**
+  String get textTerm;
+
+  /// No description provided for @hintEnterTerm.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập thuật ngữ'**
+  String get hintEnterTerm;
+
+  /// No description provided for @textDefine.
+  ///
+  /// In vi, this message translates to:
+  /// **'Định nghĩa'**
+  String get textDefine;
+
+  /// No description provided for @hintEnterDefine.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập định nghĩa'**
+  String get hintEnterDefine;
+
+  /// No description provided for @textDeleteCard.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa thẻ'**
+  String get textDeleteCard;
+
+  /// No description provided for @textDataCannotEmpty.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dữ liệu không được để trống'**
+  String get textDataCannotEmpty;
 }
 
 class _AppLocalizationsDelegate

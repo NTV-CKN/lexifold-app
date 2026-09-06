@@ -21,6 +21,7 @@ class AddOrUpdateSetScreen extends ConsumerStatefulWidget {
 class _AddOrUpdateSetState
     extends ConsumerState<AddOrUpdateSetScreen> {
   late ScrollController _scrollController;
+  late GlobalKey<FormState> _vocabulariesKey;
 
   IconData getIconByVisibility(bool isPublic) {
     return isPublic ? Icons.public : Icons.public_off;
@@ -29,6 +30,7 @@ class _AddOrUpdateSetState
   @override
   void initState() {
     _scrollController = ScrollController();
+    _vocabulariesKey = GlobalKey();
     super.initState();
   }
 
@@ -105,18 +107,22 @@ class _AddOrUpdateSetState
             ],
           ),
 
-          body: ListView.builder(
-            itemCount: formData.cards.length,
-            addAutomaticKeepAlives: true,
-            controller: _scrollController,
-            itemBuilder: (ctx, index) {
-              final card = formData.cards[index];
-              return VocabularyItemTile(
-                key: ValueKey(card.vocabulary.id),
-                index: index,
-                item: card,
-              );
-            },
+          body: Form(
+            key: _vocabulariesKey,
+            child: ListView.builder(
+              itemCount: formData.cards.length,
+              addAutomaticKeepAlives: true,
+              controller: _scrollController,
+              itemBuilder: (ctx, index) {
+                final card = formData.cards[index];
+                return VocabularyItemTile(
+                  key: ValueKey(card.vocabulary.id),
+                  index: index,
+                  item: card,
+                  formKey: _vocabulariesKey,
+                );
+              },
+            ),
           ),
         );
       },
