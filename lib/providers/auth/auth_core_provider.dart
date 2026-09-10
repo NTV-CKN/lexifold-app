@@ -7,7 +7,7 @@ import 'package:lexifold/providers/core/api_client_provider.dart';
 import 'package:lexifold/providers/core/firebase_provider.dart';
 
 final authSourceRemoteProvider = Provider<AuthSourceRemote>((ref) {
-  final apiClient = ref.watch(apiClientProvider);
+  final apiClient = ref.read(apiClientProvider);
 
   return AuthSourceRemoteImpl(
     ref.read(firebaseAuthProvider),

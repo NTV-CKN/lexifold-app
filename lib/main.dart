@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/features/auth/auth_screen.dart';
 import 'package:lexifold/features/auth/signup_waiting_verify_screen.dart';
 import 'package:lexifold/features/auth/reset_password_screen.dart';
-import 'package:lexifold/features/main/library/screens/add_or_update_set_screen.dart';
+import 'package:lexifold/features/main/library/screens/crud_study_set/add_or_update_set_screen.dart';
 import 'package:lexifold/features/main/main_screen.dart';
 import 'package:lexifold/utils/theme_utils.dart';
 import 'package:lexifold/utils/routes_name.dart';

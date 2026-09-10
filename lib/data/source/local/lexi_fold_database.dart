@@ -6,14 +6,20 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../../entities/study_sets.dart';
+import '../../entities/sync_queues.dart';
 import '../../entities/vocabularies.dart';
 import '../../enums/sync_option.dart';
+import 'daos/study_sets/study_sets_dao.dart';
+import 'daos/sync_queues/sync_queues_dao.dart';
 
 part 'lexi_fold_database.g.dart';
 
 //flutter pub run build_runner build --delete-conflicting-outputs
 
-@DriftDatabase(tables: [StudySets, Vocabularies])
+@DriftDatabase(
+  tables: [StudySets, Vocabularies, SyncQueues],
+  daos: [StudySetsDao, SyncQueuesDao],
+)
 class LexiFoldDatabase extends _$LexiFoldDatabase {
   LexiFoldDatabase({QueryExecutor? executor})
     : super(executor ?? _openConnection());

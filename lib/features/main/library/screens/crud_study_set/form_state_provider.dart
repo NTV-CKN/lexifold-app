@@ -10,7 +10,8 @@ import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
 
-///Start-FormState: Đây là phần quản lí danh sách các card khi người dùng nhập liệu và xóa sửa
+//Start-FormState: Đây là phần quản lí danh sách các card
+//khi người dùng nhập liệu và xóa sửa
 class StudySetFormState {
   final StudySetData studySetData;
   final List<VocabItem> cards;
@@ -66,7 +67,7 @@ class StudySetFormStateNotifier
       }
     });
     // if (arg == null) {
-    final studySetId = args.$1 as String;
+    final studySetId = args.$1;
 
     final cards = [
       _createVocabItem(studySetId),
@@ -86,6 +87,50 @@ class StudySetFormStateNotifier
     );
     // }
   }
+
+  /// Kiểm tra tính hợp lệ của Form nhập liệu.
+  ///
+  /// Trả về `true` nếu toàn bộ thông tin hợp lệ.
+  /// Trả về `false` nếu tiêu đề trống, thiếu thẻ hoặc thẻ chưa điền đủ nội dung.
+  bool validateForm() {
+    final formState = state.valueOrNull;
+    if (formState == null) return false;
+
+    if (formState.studySetData.title.trim().isEmpty) return false;
+
+    if (formState.cards.length < 2) return false;
+
+    for (final card in formState.cards) {
+      final term = card.vocabulary.term.trim();
+      final definition = card.vocabulary.definition.trim();
+
+      if (term.isEmpty || definition.isEmpty) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  void updateDefinition(String id, String val) {
+    final value = state.valueOrNull;
+    if (val.isEmpty || value == null) return;
+
+    final firstItemMatched = value.cards.firstWhere(
+      (item) => item.vocabulary.id == id,
+    );
+    firstItemMatched.vocabulary.definition = val;
+  }
+
+  void updateTerm(String id, String val) {
+    final value = state.valueOrNull;
+    if (val.isEmpty || value == null) return;
+
+    final firstItemMatched = value.cards.firstWhere(
+      (item) => item.vocabulary.id == id,
+    );
+    firstItemMatched.vocabulary.term = val;
+  }
 }
 
 final studySetFormStateProvider = AsyncNotifierProvider.autoDispose
@@ -94,10 +139,9 @@ final studySetFormStateProvider = AsyncNotifierProvider.autoDispose
       StudySetFormState,
       (String, bool)
     >(StudySetFormStateNotifier.new);
+//End-FormState
 
-///End-FormState
-
-///Các hàm phụ trợ
+//Các hàm phụ trợ
 VocabItem _createVocabItem(String idSet) {
   return VocabItem(
     VocabularyData(

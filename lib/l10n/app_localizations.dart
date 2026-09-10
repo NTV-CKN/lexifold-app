@@ -417,6 +417,18 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Thêm thẻ'**
   String get textAddCard;
+
+  /// No description provided for @textHandleSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thao tác thành công'**
+  String get textHandleSuccess;
+
+  /// No description provided for @textHandleFailed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thao tác thất bại'**
+  String get textHandleFailed;
 }
 
 class _AppLocalizationsDelegate

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/data/model/set/vocab_item.dart';
-import 'package:lexifold/features/main/library/screens/add_or_update_set_provider.dart';
+import 'package:lexifold/features/main/library/screens/crud_study_set/form_state_provider.dart';
 import 'package:lexifold/l10n/app_localizations.dart';
 import 'package:lexifold/utils/validator_utils.dart';
 
@@ -142,7 +142,7 @@ class _VocabularyItemTileState
               controller: _termController,
               focusNode: widget.item.termFocus,
               onChanged: (val) {
-                //notifier.updateTerm(widget.item.vocabulary.id, val);
+                notifier.updateTerm(widget.item.vocabulary.id, val);
               },
               style: TextStyle(color: colorScheme.primary),
               validator: (value) =>
@@ -175,10 +175,10 @@ class _VocabularyItemTileState
               focusNode: widget.item.defineFocus,
               style: TextStyle(color: colorScheme.primary),
               onChanged: (val) {
-                // notifier.updateDefinition(
-                //   widget.item.vocabulary.id,
-                //   val,
-                // );
+                notifier.updateDefinition(
+                  widget.item.vocabulary.id,
+                  val,
+                );
               },
               validator: (value) =>
                   Validators.checkInputNotEmpty(value, l10n),

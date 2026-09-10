@@ -7,3 +7,9 @@ final lexifoldDbProvider = Provider((ref) {
 
   return db;
 });
+
+final studySetsDaoProvider = Provider((ref) {
+  final db = ref.read(lexifoldDbProvider);
+
+  return db.studySetsDao;
+});

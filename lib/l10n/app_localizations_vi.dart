@@ -184,4 +184,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get textAddCard => 'Thêm thẻ';
+
+  @override
+  String get textHandleSuccess => 'Thao tác thành công';
+
+  @override
+  String get textHandleFailed => 'Thao tác thất bại';
 }
