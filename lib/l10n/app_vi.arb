@@ -64,5 +64,8 @@
       "hintEnterDefine": "Nhập định nghĩa",
       "textDeleteCard": "Xóa thẻ",
       "textDataCannotEmpty": "Dữ liệu không được để trống",
-      "textAddCard": "Thêm thẻ"
+      "textAddCard": "Thêm thẻ",
+
+      "textHandleSuccess": "Thao tác thành công",
+      "textHandleFailed": "Thao tác thất bại"
 }

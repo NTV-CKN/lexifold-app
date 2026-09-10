@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lexifold/features/main/library/screens/add_or_update_set_provider.dart';
+import 'package:lexifold/data/model/result/base_result.dart';
+import 'package:lexifold/features/main/library/screens/crud_study_set/crud_study_set.dart';
+import 'package:lexifold/features/main/library/screens/crud_study_set/form_state_provider.dart';
 import 'package:lexifold/features/main/library/widgets/vocab/vocabulary_item.dart';
 import 'package:lexifold/utils/show_progress_dialog.dart';
+import 'package:lexifold/utils/show_snackbar.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../../l10n/app_localizations.dart';
 
 class AddOrUpdateSetScreen extends ConsumerStatefulWidget {
   static String KEY_IS_UPDATE = "AddOrUpdateSetScreen.KEY_IS_UPDATE";
@@ -29,9 +32,7 @@ class _AddOrUpdateSetState
   }
 
   void _addCard((String, bool) args) {
-    final vocab = ref
-        .read(studySetFormStateProvider(args).notifier)
-        .addCard();
+    ref.read(studySetFormStateProvider(args).notifier).addCard();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final formState = ref
@@ -53,6 +54,44 @@ class _AddOrUpdateSetState
     });
   }
 
+  void _addOrUpdateStudySets((String, bool) args) {
+    if (_vocabulariesKey.currentState != null &&
+        _vocabulariesKey.currentState!.validate()) {
+      final crudStudySetNotifier = ref.read(
+        crudStudySetProvider.notifier,
+      );
+      crudStudySetNotifier.addOrUpdateStudySets(args);
+    }
+  }
+
+  void _handleListenCrudStudySet(
+    AsyncValue<BaseResult?>? prev,
+    AsyncValue<BaseResult?> next,
+    AppLocalizations l10n,
+  ) {
+    //Tắt loading trước đó
+    if (prev != null && prev.isLoading) {
+      ShowProgressDialog.hideDialogLoading(context);
+    }
+
+    //Hiển thị progress loading
+    if (next.isLoading) {
+      ShowProgressDialog.showDialogLoading(context);
+      return;
+    }
+
+    //Crud có dữ liệu trả về
+    if (next.hasValue && next.value is BaseResult) {
+      final successData = next.value as BaseResult;
+      ShowSnackbar.showBaseSnackbar(
+        context,
+        successData.success
+            ? l10n.textHandleSuccess
+            : l10n.textHandleFailed,
+      );
+    }
+  }
+
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -70,16 +109,21 @@ class _AddOrUpdateSetState
             as Map<String, dynamic>;
     final bool isUpdate = args[AddOrUpdateSetScreen.KEY_IS_UPDATE];
     final String idSetArg = args[AddOrUpdateSetScreen.KEY_ID_SET];
-    final String idSet = idSetArg == null || idSetArg.isEmpty
-        ? _idSet
-        : idSetArg;
-    //watch
+    final String idSet = idSetArg.isEmpty ? _idSet : idSetArg;
+    //watch study set form
     final studySetForm = ref.watch(
       studySetFormStateProvider((idSet, isUpdate)),
     );
 
+    //listen crud study set
+    ref.listen(crudStudySetProvider, (prev, next) {
+      _handleListenCrudStudySet(prev, next, l10n);
+    });
+
     return studySetForm.when(
       data: (formData) {
+        final argsFormState = (formData.studySetData.id, isUpdate);
+
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -130,9 +174,10 @@ class _AddOrUpdateSetState
             ),
             centerTitle: true,
             actions: [
+              //Save
               IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.more_horiz_outlined),
+                onPressed: () => _addOrUpdateStudySets(argsFormState),
+                icon: Icon(Icons.save_outlined),
               ),
             ],
           ),
@@ -142,7 +187,7 @@ class _AddOrUpdateSetState
               borderRadius: BorderRadius.circular(16),
             ),
             onPressed: () {
-              _addCard((formData.studySetData.id, isUpdate));
+              _addCard(argsFormState);
             },
             child: Container(
               decoration: BoxDecoration(

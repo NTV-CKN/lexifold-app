@@ -1,15 +1,15 @@
 class VocabularyData {
   final String id;
   final String studySetId;
-  final String term;
-  final String definition;
+  String term;
+  String definition;
   final String? example;
   final String? imageUrl;
   final String termLanguage;
   final String definitionLanguage;
   final DateTime updatedAt;
 
-  const VocabularyData({
+  VocabularyData({
     required this.id,
     required this.studySetId,
     required this.term,

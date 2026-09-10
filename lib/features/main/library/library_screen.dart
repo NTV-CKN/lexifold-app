@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lexifold/features/main/library/screens/add_or_update_set_screen.dart';
+import 'package:lexifold/features/main/library/screens/crud_study_set/add_or_update_set_screen.dart';
 import 'package:lexifold/features/main/library/widgets/set/set_content.dart';
 import 'package:lexifold/l10n/app_localizations.dart';
 import 'package:lexifold/utils/routes_name.dart';

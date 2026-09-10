@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:lexifold/data/enums/sync_option.dart';
 
 class StudySets extends Table {
   TextColumn get id => text()();
@@ -17,10 +16,6 @@ class StudySets extends Table {
 
   TextColumn get targetLanguage =>
       text().withDefault(const Constant("vi"))();
-
-  TextColumn get syncStatus => text().withDefault(
-    Constant(SyncOption.pending_created.typeName),
-  )();
 
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime)();
