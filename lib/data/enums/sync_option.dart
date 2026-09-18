@@ -14,3 +14,5 @@ enum SyncOption {
 ///Được dùng trong bảng SyncQueues giúp đánh dấu lại record đó
 ///sẽ thực hiện cho thực thể (bảng nào)
 enum EntitySyncType { study_sets }
+
+enum SyncState { processing, failed, pending }

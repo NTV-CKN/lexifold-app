@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
+import 'package:lexifold/data/dto/study_set_dto.dart';
 import 'package:lexifold/data/entities/vocabularies.dart';
 import 'package:lexifold/data/enums/sync_option.dart';
 import 'package:lexifold/data/source/local/lexi_fold_database.dart';
@@ -39,12 +42,18 @@ class StudySetsDao extends DatabaseAccessor<LexiFoldDatabase>
 
         //Ghi lại công việc cần đồng bộ lên Server
         final syncQueue = SyncQueuesCompanion.insert(
-          createdAT: DateTime.now(),
+          createdAt: DateTime.now(),
           entityId: studySet.id,
           entityType: EntitySyncType.study_sets.name,
           syncQueueOption: isUpdate
               ? SyncOption.pending_updated.typeName
               : SyncOption.pending_created.typeName,
+          payload: jsonEncode(
+            StudySetDto.fromEntity(
+              studySet,
+              vocabulariesLst,
+            ).toJson(),
+          ),
         );
 
         await db.syncQueuesDao.addSyncQueueTask(syncQueue);

@@ -11,7 +11,7 @@ final networkStatusProvider =
 ///Provider này cung cấp nhanh liệu thiết bị có đang kết nối mạng không?
 ///Chưa khẳng định thiết bị đã kết nối đến Internet hay không.
 final isConnectedProvider = Provider<bool>((ref) {
-  final networkState = ref.watch(networkStatusProvider);
+  final networkState = ref.read(networkStatusProvider);
 
   return networkState.when(
     data: (results) {

@@ -46,7 +46,7 @@ class VocabularyDto {
       "imageUrl": imageUrl,
       "termLanguage": termLanguage,
       "definitionLanguage": definitionLanguage,
-      "updateAt": updatedAt,
+      "updatedAt": updatedAt,
     };
   }
 }
