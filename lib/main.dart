@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexifold/features/auth/auth_screen.dart';
 import 'package:lexifold/features/auth/signup_waiting_verify_screen.dart';
 import 'package:lexifold/features/auth/reset_password_screen.dart';
-import 'package:lexifold/features/common/splash_screen.dart';
 import 'package:lexifold/features/main/library/screens/crud_study_set/add_or_update_set_screen.dart';
 import 'package:lexifold/features/main/main_screen.dart';
+import 'package:lexifold/providers/sync_manager/sync_manager.dart';
 import 'package:lexifold/utils/theme_utils.dart';
 import 'package:lexifold/utils/routes_name.dart';
 
@@ -53,11 +53,23 @@ void main() async {
   );
 }
 
-class LexiFoldApp extends StatelessWidget {
+class LexiFoldApp extends ConsumerWidget {
   const LexiFoldApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(syncManagerProvider, (previous, next) {
+      next.whenData((syncState) {
+        if (syncState != null && syncState.lastErr != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Lỗi đồng bộ: ${syncState.lastErr}'),
+            ),
+          );
+        }
+      });
+    });
+
     return const MainScreen();
   }
 }
