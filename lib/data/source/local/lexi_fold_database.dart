@@ -25,7 +25,25 @@ class LexiFoldDatabase extends _$LexiFoldDatabase {
     : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onCreate: (m) async {
+        await m.createAll();
+      },
+      onUpgrade: (m, from, to) async {
+        for (final table in allTables) {
+          await m.drop(table);
+        }
+        await m.createAll();
+      },
+      beforeOpen: (details) async {
+        await customStatement('PRAGMA foreign_keys = ON;');
+      },
+    );
+  }
 }
 
 LazyDatabase _openConnection() {
