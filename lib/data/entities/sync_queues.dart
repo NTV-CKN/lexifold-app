@@ -23,5 +23,9 @@ class SyncQueues extends Table {
   //Message lỗi gần nhất nếu API bị đứt/sự cố
   TextColumn get lastError => text().nullable()();
 
+  //Đánh dấu thời điểm tạo request
   DateTimeColumn get createdAt => dateTime()();
+
+  //Đánh dấu thời gian cuối bị failed request, dựa vào đó để xác định reset
+  DateTimeColumn get lastRequestFailedAt => dateTime().nullable()();
 }

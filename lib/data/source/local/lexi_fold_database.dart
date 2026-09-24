@@ -25,7 +25,7 @@ class LexiFoldDatabase extends _$LexiFoldDatabase {
     : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration {

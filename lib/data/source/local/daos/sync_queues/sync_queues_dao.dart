@@ -59,8 +59,8 @@ class SyncQueuesDao extends DatabaseAccessor<LexiFoldDatabase>
   }
 
   ///Hàm này sẽ đánh dấu record của SyncQueue với cột
-  ///syncState là failed (tức đồng bồ thất bại) và tăng countRequest
-  ///lên 1 đơn vị.
+  ///syncState là failed (tức đồng bồ thất bại), tăng countRequest
+  ///lên 1 đơn vị và cập nhật lại thời gian thất bại mới nhất.
   Future<void> increaseCountRequest(SyncQueue syncQueue) async {
     await update(syncQueues)
       ..where((tbl) => tbl.id.equals(syncQueue.id))
@@ -68,6 +68,7 @@ class SyncQueuesDao extends DatabaseAccessor<LexiFoldDatabase>
         SyncQueuesCompanion(
           syncState: Value(SyncState.failed.name),
           countRequest: Value(syncQueue.countRequest + 1),
+          lastRequestFailedAt: Value(DateTime.now()),
         ),
       );
   }
@@ -86,5 +87,29 @@ class SyncQueuesDao extends DatabaseAccessor<LexiFoldDatabase>
       );
 
     return query.watch();
+  }
+
+  ///Hàm này sẽ reset các record có trạng thái syncState Failed với request count là 5
+  ///trở lên và thời gian cuối cùng request thất bại phải trên 5 tiếng.
+  Future<void> resetCountRequestAndSyncState() async {
+    final dateNowSubtract5h = DateTime.now().subtract(
+      const Duration(hours: 5),
+    );
+
+    await (update(syncQueues)..where(
+          (tbl) =>
+              tbl.countRequest.isBiggerOrEqual(const Constant(5)) &
+              tbl.syncState.equals(SyncState.failed.name) &
+              tbl.lastRequestFailedAt.isSmallerOrEqualValue(
+                dateNowSubtract5h,
+              ),
+        ))
+        .write(
+          SyncQueuesCompanion(
+            syncState: Value(SyncState.pending.name),
+            countRequest: Value(0),
+            lastRequestFailedAt: Value(null),
+          ),
+        );
   }
 }
