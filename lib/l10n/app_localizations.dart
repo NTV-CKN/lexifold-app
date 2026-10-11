@@ -429,6 +429,18 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Thao tác thất bại'**
   String get textHandleFailed;
+
+  /// No description provided for @hintSearch.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm kiếm'**
+  String get hintSearch;
+
+  /// No description provided for @textStudySetIsEmpty.
+  ///
+  /// In vi, this message translates to:
+  /// **'Học phần trống!'**
+  String get textStudySetIsEmpty;
 }
 
 class _AppLocalizationsDelegate

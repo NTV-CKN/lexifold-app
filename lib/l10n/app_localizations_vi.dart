@@ -190,4 +190,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get textHandleFailed => 'Thao tác thất bại';
+
+  @override
+  String get hintSearch => 'Tìm kiếm';
+
+  @override
+  String get textStudySetIsEmpty => 'Học phần trống!';
 }

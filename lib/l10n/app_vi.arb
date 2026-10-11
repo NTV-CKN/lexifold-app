@@ -67,5 +67,8 @@
       "textAddCard": "Thêm thẻ",
 
       "textHandleSuccess": "Thao tác thành công",
-      "textHandleFailed": "Thao tác thất bại"
+      "textHandleFailed": "Thao tác thất bại",
+      "hintSearch": "Tìm kiếm",
+      "textStudySetIsEmpty": "Học phần trống!"
+
 }

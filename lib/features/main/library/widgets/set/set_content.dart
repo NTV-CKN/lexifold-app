@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lexifold/data/enums/paging_metadata.dart';
+import 'package:lexifold/shared/widget/paging_study_set/paging_study_set.dart';
 
 class SetContent extends ConsumerStatefulWidget {
   const SetContent({super.key});
@@ -16,11 +18,7 @@ class _SetContent extends ConsumerState<SetContent>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return ListView.builder(
-      itemCount: 50,
-      itemBuilder: (context, index) =>
-          ListTile(title: Text('Học phần $index')),
-    );
+    return PagingStudySet(StudySetPagingEnum.ALL_STUDY_SET);
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:lexifold/data/dto/response/cursor_page_result.dart';
 import 'package:lexifold/data/enums/paging_metadata.dart';
 import 'package:lexifold/data/model/result/base_result.dart';
@@ -85,46 +86,51 @@ class StudySetsRepositoryImpl implements StudySetsRepository {
     final metadata = await _local.getStudySetMetadata(key);
 
     bool isCacheExpired =
-        metadata == null ||
+        metadata != null &&
         now.difference(metadata.lastUpdatedAt) >= _durationRefresh;
-    final bool isFullySynced =
-        metadata?.nextCursorId == null && metadata != null;
 
-    //Thực hiện load local trong trường hợp:
-    //chưa hết hạn và forceRefresh = false
-    if (!isCacheExpired && !forceRefresh) {
-      //Logic này đảm bảo hệ thống chỉ gọi lấy data từ
-      //local khi metadata.nextCursorId == null HOẶC
-      //nextCursorId truyền từ UI == null (gọi lần đầu) HOẶC
-      //giá trị của nextCursorId khác metadata.nextCursorId (đảm
-      //bảo nếu metadata.nextCursorId != null thì nó cũng không tự
-      //ý gọi lên server khi quay lại màn hình phân trang)
-      if (isFullySynced ||
-          nextCursorId == null ||
-          (nextCursorId != metadata.nextCursorId)) {
-        final localResult = await _processPagingLocal(
-          limit: limit,
-          isFullSync: isFullySynced,
-          now: now,
-          nextCursorId: nextCursorId,
-          key: key,
+    //Nếu KHÔNG PHẢI forceRefresh, luôn thử lấy dữ liệu từ Local trước
+    if (!forceRefresh && !isCacheExpired) {
+      final localItems = await _local.getStudySetsPaging(
+        limit: limit,
+        nextCursorId: nextCursorId,
+      );
+      //Nếu Local đã có dữ liệu -> Trả về UI ngay lập tức!
+      debugPrint(localItems.length.toString());
+      if (localItems.isNotEmpty) {
+        return CursorPageResult(
+          items: localItems,
+          hasNextPage:
+              localItems.length == limit ||
+              metadata?.nextCursorId != null,
+          nextCursorId: localItems.last.id,
+          nextCursorUpdatedAt: now,
         );
-
-        //Nếu Local có dữ liệu -> Trả về
-        if (localResult.items.isNotEmpty) {
-          return localResult;
-        }
       }
     }
 
-    return await _processPagingRemoteMediator(
-      forceRefresh: forceRefresh,
-      isCacheExpired: isCacheExpired,
-      now: now,
-      key: key,
-      limit: limit,
-      metadata: metadata,
-    );
+    try {
+      return await _processPagingRemoteMediator(
+        forceRefresh: forceRefresh,
+        isCacheExpired: isCacheExpired,
+        now: now,
+        key: key,
+        limit: limit,
+        metadata: metadata,
+      );
+    } catch (e, st) {
+      debugPrint('Remote paging error: $e\n$st');
+      //Nếu Remote lỗi đọc lại Local lần cuối làm Fallback
+      final fallbackLocal = await _local.getStudySetsPaging(
+        limit: limit,
+        nextCursorId: nextCursorId,
+      );
+      return CursorPageResult(
+        items: fallbackLocal,
+        hasNextPage: false,
+        nextCursorId: null,
+      );
+    }
   }
 
   Future<CursorPageResult<StudySet>> _processPagingRemoteMediator({
@@ -166,9 +172,7 @@ class StudySetsRepositoryImpl implements StudySetsRepository {
         StudySetPagingMetadata(
           categoryKey: key.name,
           lastUpdatedAt: now,
-          nextCursorId: result.items.length == limit
-              ? result.items[result.items.length - 1].id
-              : null,
+          nextCursorId: result.nextCursorId,
         ),
       );
 
